@@ -6,6 +6,9 @@ let keycloak = null;
  * Initialisiert die Keycloak-Instanz und verwaltet die Authentifizierung.
  * @param {Function} onAuthenticated - Callback-Funktion, die bei Authentifizierung ausgeführt wird.
  * @returns {Promise} - Ein Promise, das aufgelöst wird, wenn Keycloak initialisiert ist.
+ * 
+ * Integration von Keycloak in eine Frontend Applikation:
+ * Diese Funktion initialisiert die Keycloak-Instanz und verwaltet die Authentifizierung des Benutzers.
  */
 const initKeycloak = (onAuthenticated) => {
   if (!keycloak) {
@@ -36,6 +39,8 @@ const initKeycloak = (onAuthenticated) => {
 /**
  * Ruft das aktuelle Keycloak-Token ab.
  * @returns {string} - Das Keycloak-Token.
+ * 
+ * Diese Funktion gibt das aktuelle Token des authentifizierten Benutzers zurück.
  */
 const getToken = () => {
   return keycloak.token;
@@ -45,6 +50,9 @@ const getToken = () => {
  * Überprüft, ob der Benutzer eine bestimmte Rolle hat.
  * @param {string} role - Die zu überprüfende Rolle.
  * @returns {boolean} - True, wenn der Benutzer die Rolle hat, andernfalls false.
+ * 
+ * Role Based Access Control Konzept:
+ * Diese Funktion überprüft, ob der authentifizierte Benutzer eine bestimmte Rolle hat.
  */
 const hasRole = (role) => {
   return keycloak && keycloak.authenticated && keycloak.hasRealmRole(role);
@@ -52,6 +60,8 @@ const hasRole = (role) => {
 
 /**
  * Meldet den aktuellen Benutzer ab.
+ * 
+ * Diese Funktion meldet den aktuell authentifizierten Benutzer ab.
  */
 const logout = () => {
   keycloak.logout();

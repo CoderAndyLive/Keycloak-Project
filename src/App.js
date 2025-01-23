@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { initKeycloak, getToken, logout, keycloak } from './KeyCloakService';
 
 /**
- * Main application component.
- * @returns {JSX.Element} - The rendered component.
+ * Hauptanwendungskomponente.
+ * @returns {JSX.Element} - Die gerenderte Komponente.
+ * 
+ * Entwicklung einer Komponente zur Autorisierung des Users auf einer Seite:
+ * Diese Komponente stellt sicher, dass der Benutzer authentifiziert ist, bevor er auf die Anwendung zugreifen kann.
+ * Sie zeigt unterschiedliche Inhalte basierend auf den Rollen des Benutzers an.
  */
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -18,30 +22,33 @@ function App() {
   }, []);
 
   /**
-   * Checks if the user has a specific role.
-   * @param {string} role - The role to check.
-   * @returns {boolean} - True if the user has the role, false otherwise.
+   * Überprüft, ob der Benutzer eine bestimmte Rolle hat.
+   * @param {string} role - Die zu überprüfende Rolle.
+   * @returns {boolean} - True, wenn der Benutzer die Rolle hat, andernfalls false.
+   * 
+   * Role Based Access Control Konzept:
+   * Diese Funktion überprüft, ob der authentifizierte Benutzer eine bestimmte Rolle hat.
+   * Basierend auf den Rollen des Benutzers werden unterschiedliche Inhalte angezeigt.
    */
   const hasRole = (role) => {
     return keycloak.hasRealmRole(role);
-    
   };
 
   return (
     <div>
-      <h1>My App</h1>
+      <h1>Meine App</h1>
       {authenticated ? (
         <div>
-          <p>Welcome!</p>
-          {!hasRole('user') && <p>Your token: {getToken()}</p>}
-          {hasRole('admin') && <p>You have admin access!</p>}
-          <button onClick={logout}>Logout</button>
+          <p>Willkommen!</p>
+          {!hasRole('user') && <p>Ihr Token: {getToken() || 'Kein Token verfügbar'}</p>}
+          {hasRole('admin') && <p>Sie haben Admin-Zugriff!</p>}
+          {hasRole('user') && <p>Sie haben Basis Zugriff</p>}
+          <button onClick={logout}>Abmelden</button>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p>Laden...</p>
       )}
     </div>
-    
   );
 }
 
