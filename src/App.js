@@ -1,4 +1,4 @@
-// src/App.js
+
 import React, { useEffect, useState } from 'react';
 import { initKeycloak, getToken, logout, keycloak } from './KeyCloakService';
 
